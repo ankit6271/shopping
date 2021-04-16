@@ -1,0 +1,296 @@
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.no-padding {
+  padding: 0;
+}
+.left-container .title {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e9e9ed;
+  padding: 20px 0 20px 20px;
+  display: block;
+}
+.left-container button {
+  display: none;
+}
+.gender-list {
+  padding: 15px 0 15px 20px;
+  border-bottom: 1px solid #e9e9ed;
+  border-right: 1px solid #e9e9ed;
+  position: relative;
+}
+.discount-list {
+  padding-top: 15px;
+  padding-left: 20px;
+  border-right: 1px solid #e9e9ed;
+  position: relative;
+}
+.gender-list input[type="radio"],
+.discount-list input[type="radio"] {
+  margin: 0 15px 0 0;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.gender-list label {
+  color: #282c3f;
+  cursor: pointer;
+  position: relative;
+  padding-left: 30px;
+  display: block;
+}
+.discount-list label {
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 30px;
+  cursor: pointer;
+  position: relative;
+}
+.gender-list label:before,
+.gender-list label:after,
+.discount-list label:before,
+.discount-list label:after {
+  content: "";
+  width: 17px;
+  height: 17px;
+  border: 1px solid #c3c2c9;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 2px;
+}
+.gender-list li label:after,
+.discount-list li label:after {
+  transform: scale(0);
+}
+.gender-list input[type="radio"]:checked + label:before,
+.discount-list input[type="radio"]:checked + label:before {
+  border-width: 1px;
+  border-color: #ff3f6c;
+}
+.gender-list input[type="radio"]:checked + label:after,
+.discount-list input[type="radio"]:checked + label:after {
+  background: #ff3f6c;
+  border-color: #ff3f6c;
+  transform: scale(0.5);
+}
+.categories-list,
+.brand-list,
+.season-list,
+.price-list,
+.color-list {
+  padding: 15px 0 15px 20px;
+  border-bottom: 1px solid #e9e9ed;
+  border-right: 1px solid #e9e9ed;
+  position: relative;
+}
+.categories-list li,
+.brand-list li,
+.price-list li,
+.season-list li,
+.color-list li {
+  margin: 0 0 7px;
+}
+.categories-list input[type="checkbox"],
+.brand-list input[type="checkbox"],
+.price-list input[type="checkbox"],
+.color-list input[type="checkbox"],
+.season-list input[type="checkbox"] {
+  margin: 0 15px 0 0;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.categories-list label,
+.brand-list label,
+.price-list label,
+.season-list label,
+.gender-list label,
+.color-list label {
+  color: #282c3f;
+  font-weight: 500;
+  padding-left: 30px;
+  cursor: pointer;
+  position: relative;
+}
+.categories-list label:before,
+.categories-list label:after,
+.brand-list label:before,
+.brand-list label:after,
+.price-list label:before,
+.price-list label:after,
+.color-list label:before,
+.color-list label:after,
+.season-list label:before,
+.season-list label:after {
+  content: "";
+  width: 17px;
+  height: 17px;
+  border: 1px solid #c3c2c9;
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  top: 2px;
+}
+.categories-list label:after,
+.brand-list label:after,
+.price-list label:after,
+.color-list label:after,
+.season-list label:after {
+  width: 9px;
+  height: 6px;
+  border-top: 0;
+  border-right: 0;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg);
+  top: 6px;
+  left: 4px;
+  z-index: 1;
+}
+.categories-list input[type="checkbox"]:checked + label:before,
+.brand-list input[type="checkbox"]:checked + label:before,
+.price-list input[type="checkbox"]:checked + label:before,
+.color-list input[type="checkbox"]:checked + label:before,
+.season-list input[type="checkbox"]:checked + label:before {
+  background: #ff3f6c;
+  border: none;
+}
+.filter-header {
+  color: #282c3f;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+}
+.right-container {
+  overflow: hidden;
+}
+.search-products {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e9e9ed;
+  padding: 13px 20px 13px 20px;
+  position: relative;
+}
+.active-box li {
+  border: 2px solid #ccc;
+  list-style: none;
+  padding: 8px 30px;
+  display: none;
+}
+.search-products li:hover {
+  background: #e4e4e9;
+}
+.Click {
+  background: transparent;
+  color: #696e79;
+  font-size: 16px;
+  border: none;
+  padding: 0 15px;
+  position: absolute;
+  top: 21px;
+  left: auto;
+}
+.search-products input[type="text"]::placeholder {
+  font-weight: 500;
+}
+
+.search-products.active .active-box li {
+  width: 80%;
+  display: block;
+}
+
+.search-products input[type="text"] {
+  background: #f5f5f6;
+  width: 80%;
+  border: 2px solid #ccc;
+  transition: width 1s ease-in-out;
+  height: 40px;
+  border-radius: 10px;
+  padding: 10px 10px 10px 50px;
+}
+.search-products input[type="text"]:focus {
+  background: transparent;
+  width: 80%;
+  border: 2px solid #ccc;
+}
+.search-container {
+  padding: 25px 0 25px 30px;
+}
+.product-grid {
+  /* box-shadow: 0 4px 8px 0 rgba(250, 247, 247, 0.2), 0 6px 20px 0 rgba(185, 184, 184, 0.19); */
+  margin: 0 0 35px;
+}
+.product-image img {
+  width: 100%;
+}
+.product-content {
+  padding: 10px;
+}
+.product-content .product-brand {
+  color: #282c3f;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.product-content .product-product {
+  color: #535766;
+  text-overflow: ellipsis;
+  font-size: 14px;
+  overflow: hidden;
+  display: block;
+  white-space: nowrap;
+  margin: 0 0 10px;
+}
+.product-content .product-price {
+  color: #282c3f;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+@media only screen and (max-width: 991px) {
+  .search-products input[type="text"] {
+    width: 75%;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .left-container .filters {
+    display: none;
+  }
+  .left-container button {
+    display: block;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 1;
+  }
+  .search-container {
+    padding: 25px 30px 25px 30px;
+  }
+  /* .search-products input[type="text"]{
+        width: 55%;
+    } */
+}
+@media only screen and (max-width: 576px) {
+  .search-products {
+    padding: 25px;
+  }
+  .search-products form {
+    display: none;
+  }
+  .left-container button {
+    top: 13px;
+    right: 25px;
+  }
+}
