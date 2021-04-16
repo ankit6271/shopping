@@ -6,7 +6,11 @@ export const actions = {
 export const fetchProductsData = () => ({
   type: actions.FETCH_DATA,
 });
-export const saveProductsData = (data) => ({
+export const saveProductsData = (data,gender,category,brand,season) => ({
   type: actions.SAVE_DATA,
   data,
+  gender,
+  category,
+  brand,
+  season,
 });

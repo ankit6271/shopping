@@ -11,11 +11,7 @@ import getData from '../Services/productApi';
 
 function Home(props) {
   const dispatch = useDispatch();
-  const [productsData, setProductsData] = useState({});
-  const [gender, setGender] = useState(new Set());
-  const [category, setCategory] = useState(new Set());
-  const [brand, setBrand] = useState(new Set());
-  const [season, setSeason] = useState(new Set());
+  
   const [selectedValueForCategory, setSelectedValueForCategory] = useState(
     new Set(),
   );
@@ -29,59 +25,37 @@ function Home(props) {
 
   useEffect(() => {
     dispatch(fetchProductsData());
-  });
-  useEffect(() => {
-    setProductsData(props.data);
-    const fetchGender = () => {
-      if (productsData?.products) {
-        productsData.products.map((value) => gender.add(value.gender));
-      }
-    };
+  },[]);
 
-    const fetchCategories = () => {
-      if (productsData?.products) {
-        productsData.products.map((value) => category.add(value.category));
-      }
-    };
-
-    const fetchBrand = () => {
-      if (productsData?.products) {
-        productsData.products.map((value) => brand.add(value.brand));
-      }
-    };
-
-    const fetchSeasons = () => {
-      if (productsData?.products) {
-        productsData.products.map((value) => season.add(value.season));
-      }
-    };
-
-    fetchGender();
-    fetchCategories();
-    fetchBrand();
-    fetchSeasons();
-  });
   const onGenderHandler = (productValue) => {
     selectedValueForAllFilters.set('Gender', productValue);
     console.log(selectedValueForAllFilters);
+    dispatch(fetchFilteredProductsData(selectedValueForAllFilters));
+
   };
 
   const onCategoryHandler = (productValue) => {
     selectedValueForCategory.add(productValue);
     selectedValueForAllFilters.set('Category', selectedValueForCategory);
     console.log(selectedValueForAllFilters);
+    dispatch(fetchFilteredProductsData(selectedValueForAllFilters));
+
   };
 
   const onBrandHandler = (productValue) => {
     selectedValueForBrand.add(productValue);
     selectedValueForAllFilters.set('Brand', selectedValueForBrand);
     console.log(selectedValueForAllFilters);
+    dispatch(fetchFilteredProductsData(selectedValueForAllFilters));
+
   };
 
   const onSeasonHandler = (productValue) => {
     selectedValueForSeason.add(productValue);
     selectedValueForAllFilters.set('Season', selectedValueForSeason);
     console.log(selectedValueForAllFilters);
+    dispatch(fetchFilteredProductsData(selectedValueForAllFilters));
+
   };
 
   return (
@@ -100,7 +74,7 @@ function Home(props) {
                   <span className="title">Filter</span>
                   <ul className="gender-list">
                     <h4 className="filter-header">GenderList</h4>
-                    {Array.from(gender).map((productValue, index) => (
+                    {props?.gender?.map((productValue, index) => (
                       <GenderList
                         id={index}
                         productValue={productValue}
@@ -110,7 +84,7 @@ function Home(props) {
                   </ul>
                   <ul className="categories-list">
                     <h4 className="filter-header">categories</h4>
-                    {Array.from(category).map((productValue, index) => (
+                    {props?.category?.map((productValue, index) => (
                       <CategoryList
                         id={index}
                         productValue={productValue}
@@ -120,7 +94,7 @@ function Home(props) {
                   </ul>
                   <ul className="brand-list">
                     <h4 className="filter-header">Brand</h4>
-                    {Array.from(brand).map((productValue, index) => (
+                    {props?.brand?.map((productValue, index) => (
                       <BrandList
                         id={index}
                         productValue={productValue}
@@ -130,7 +104,7 @@ function Home(props) {
                   </ul>
                   <ul className="season-list">
                     <h4 className="filter-header">Season</h4>
-                    {Array.from(season).map((productValue, index) => (
+                    {props?.season?.map((productValue, index) => (
                       productValue.length > 0 && (
                         <SeasonList
                           id={index}
@@ -148,8 +122,8 @@ function Home(props) {
                 <Search />
                 <div className="search-container">
                   <div className="row">
-                    {productsData?.products &&
-                      productsData.products.map((product, index) => (
+                    {props?.data?.products &&
+                      props?.data?.products.map((product, index) => (
                         <InitialData id={index} productValue={product} />
                       ))}
                   </div>
@@ -165,7 +139,11 @@ function Home(props) {
 
 const mapData = (state) => {
   return {
-    data: state.data,
+    data: state.filterData,
+    gender:state.gender,
+    category:state.category,
+    brand:state.brand,
+    season:state.season,
   };
 };
 
