@@ -31,8 +31,7 @@ function Home(props) {
     dispatch(fetchProductsData());
   });
   useEffect(() => {
-    const productsData = props.data;
-    console.log(productsData);
+    setProductsData(props.data);
     const fetchGender = () => {
       if (productsData?.products) {
         productsData.products.map((value) => gender.add(value.gender));
@@ -149,7 +148,7 @@ function Home(props) {
                 <Search />
                 <div className="search-container">
                   <div className="row">
-                    {productsData.products &&
+                    {productsData?.products &&
                       productsData.products.map((product, index) => (
                         <InitialData id={index} productValue={product} />
                       ))}
@@ -165,8 +164,6 @@ function Home(props) {
 }
 
 const mapData = (state) => {
-  console.log(state);
-
   return {
     data: state.data,
   };
