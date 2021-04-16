@@ -6,7 +6,7 @@ import SeasonList from './Filters/SeasonList';
 import GenderList from './Filters/GenderList';
 import Search from '../Components/Search';
 import InitialData from './ProductData';
-import { fetchProductsData } from '../store/action';
+import { fetchProductsData,fetchFilteredProductsData } from '../store/action';
 import getData from '../Services/productApi';
 
 function Home(props) {

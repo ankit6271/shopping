@@ -2,7 +2,6 @@ import getData from '../Services/productApi';
 import { saveProductsData } from './action';
 import { actions } from './action'
 import { put, takeLatest } from 'redux-saga/effects';
-import { useState } from 'react';
 
 function* fetchProductsData() {
   const gender=new Set();
@@ -22,26 +21,29 @@ function* fetchProductsData() {
     console.log(error);
   }
 }
-function* fetchFilteredProductsData(mapData) {
+function* fetchFilteredProductsData({mapData}) {
+  console.log(mapData);
   try {
-    const dataFetched = yield getData();
-    dataFetched?.products?.map((value) => {
-      for(let mapValue of mapData.values())
-        if(value.gender===mapValue){
-          
+    const finalDataFetched=dataFetched?.products?.filter((value) => {
+      for(let mapValue of mapData.values()){
+        let arrayForMap=Array.from(mapValue);
+        for(let i=0;i<arrayForMap.length;i++){
+          if(value.gender===arrayForMap[i]){
+            return value
+          }
+          else if(value.category===arrayForMap[i]){
+            return value
+          }
+          else if(value.brand===arrayForMap[i]){
+            return value
+          }
+          else if(value.season===arrayForMap[i]){
+            return value
+          }
         }
-        else if(value.category===mapValue){
-
-        }
-        else if(value.brand===mapValue){
-          
-        }
-        else if(value.season===mapValue){
-          
-        }
-      
+      }
     });
-    yield put(saveProductsData(dataFetched, Array.from(gender), Array.from(category),Array.from(brand) , Array.from(season)));
+    yield put(saveProductsData(finalDataFetched));
   } catch (error) {
     console.log(error);
   }
