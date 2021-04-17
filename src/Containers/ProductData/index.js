@@ -10,7 +10,6 @@ function InitialData(props) {
         <div className="product-content">
           <h3 className="product-brand">{props.productValue.brand}</h3>
           <span className="product-product">
-            {' '}
             {props.productValue.product}
           </span>
           <h4 className="product-price">

@@ -11,7 +11,7 @@ const reducer = (state = initialState, action) => {
     case 'SAVE_DATA':
       return {
         ...state,
-        filterData:action.data,
+        filterData:action.filterData,
         data: action.data,
         gender: action.gender,
         category: action.category,

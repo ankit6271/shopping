@@ -1,61 +1,218 @@
-import { useEffect, useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import CategoryList from './Filters/CategoryList';
-import BrandList from './Filters/BrandList';
-import SeasonList from './Filters/SeasonList';
-import GenderList from './Filters/GenderList';
-import Search from '../Components/Search';
-import InitialData from './ProductData';
-import { fetchProductsData,fetchFilteredProductsData } from '../store/action';
-import getData from '../Services/productApi';
+import { useEffect, useState } from "react";
+import { connect, useDispatch } from "react-redux";
+import CategoryList from "./Filters/CategoryList";
+import BrandList from "./Filters/BrandList";
+import SeasonList from "./Filters/SeasonList";
+import GenderList from "./Filters/GenderList";
+import Search from "../Components/Search";
+import InitialData from "./ProductData";
+import { fetchProductsData, saveProductsData } from "../store/action";
 
 function Home(props) {
   const dispatch = useDispatch();
-  
-  const [selectedValueForCategory, setSelectedValueForCategory] = useState(
-    new Set(),
+  const [selectedValueForGender, setSelectedValueForGender] = useState(
+    new Set()
   );
+  const [selectedValueForCategory, setSelectedValueForCategory] = useState(
+    new Set()
+  );
+  const [stateForFilter, setStateForFilter] = useState(false);
   const [selectedValueForBrand, setSelectedValueForBrand] = useState(new Set());
   const [selectedValueForSeason, setSelectedValueForSeason] = useState(
-    new Set(),
+    new Set()
   );
   const [selectedValueForAllFilters, setSelectedValueForAllFilters] = useState(
-    new Map(),
+    new Map()
   );
 
   useEffect(() => {
     dispatch(fetchProductsData());
-  },[]);
+  }, []);
+
+  const [input, inputState] = useState("");
+  const [state, setState] = useState("");
+
+  function onChangeForSearch(event) {
+    inputState(event.target.value);
+    console.log(event.target.value);
+  }
+
+  function keyUpEvent(event) {
+    if (event.key === "Enter") {
+      setState(input);
+      event.preventDefault();
+      let arrayValue = props?.data?.filter((value) => {
+        if (value.gender.toLowerCase() === state.toLowerCase()) {
+          return value;
+        } else if (value.category.toLowerCase() === state.toLowerCase()) {
+          return value;
+        } else if (value.brand.toLowerCase() === state.toLowerCase()) {
+          return value;
+        } else if (value.season.toLowerCase() === state.toLowerCase()) {
+          return value;
+        }
+        else if (value.productName.toLowerCase().includes(state.toLowerCase())) {
+          return value;
+        }
+      });
+      setStateForFilter(true);
+      dispatch(
+        saveProductsData(
+          props.data,
+          arrayValue,
+          props.gender,
+          props.category,
+          props.brand,
+          props.season
+        )
+      );
+    }
+  }
+
+  function onImageClickHandler(event) {
+    setState(input);
+    event.preventDefault();
+    let arrayValue = props?.data?.filter((value) => {
+      if (value.gender.toLowerCase() === state.toLowerCase()) {
+        return value;
+      } else if (value.category.toLowerCase() === state.toLowerCase()) {
+        return value;
+      } else if (value.brand.toLowerCase() === state.toLowerCase()) {
+        return value;
+      } else if (value.season.toLowerCase() === state.toLowerCase()) {
+        return value;
+      }
+      else if (value.productName.toLowerCase().includes(state.toLowerCase())) {
+        return value;
+      }
+    });
+    setStateForFilter(true);
+    dispatch(
+      saveProductsData(
+        props.data,
+        arrayValue,
+        props.gender,
+        props.category,
+        props.brand,
+        props.season
+      )
+    );
+  }
 
   const onGenderHandler = (productValue) => {
-    selectedValueForAllFilters.set('Gender', productValue);
-    console.log(selectedValueForAllFilters);
-    dispatch(fetchFilteredProductsData(selectedValueForAllFilters));
-
+    console.log(productValue);
+    let arrayValue = props?.data?.filter((value) => {
+      if (value.gender === productValue) {
+        return value;
+      }
+    });
+    setStateForFilter(true);
+    dispatch(
+      saveProductsData(
+        props.data,
+        arrayValue,
+        props.gender,
+        props.category,
+        props.brand,
+        props.season
+      )
+    );
   };
 
   const onCategoryHandler = (productValue) => {
     selectedValueForCategory.add(productValue);
-    selectedValueForAllFilters.set('Category', selectedValueForCategory);
+    selectedValueForAllFilters.set("Category", selectedValueForCategory);
     console.log(selectedValueForAllFilters);
-    dispatch(fetchFilteredProductsData(selectedValueForAllFilters));
-
+    let arrayValue = props?.data?.filter((value) => {
+      for (let mapValue of selectedValueForAllFilters.values()) {
+        let arrayForMap = Array.from(mapValue);
+        console.log(arrayForMap);
+        for (let i = 0; i < arrayForMap.length; i++) {
+          if (value.category === arrayForMap[i]) {
+            return value;
+          } else if (value.brand === arrayForMap[i]) {
+            return value;
+          } else if (value.season === arrayForMap[i]) {
+            return value;
+          }
+        }
+      }
+    });
+    setStateForFilter(true);
+    dispatch(
+      saveProductsData(
+        props.data,
+        arrayValue,
+        props.gender,
+        props.category,
+        props.brand,
+        props.season
+      )
+    );
   };
 
   const onBrandHandler = (productValue) => {
     selectedValueForBrand.add(productValue);
-    selectedValueForAllFilters.set('Brand', selectedValueForBrand);
+    selectedValueForAllFilters.set("Brand", selectedValueForBrand);
     console.log(selectedValueForAllFilters);
-    dispatch(fetchFilteredProductsData(selectedValueForAllFilters));
-
+    let arrayValue = props?.data?.filter((value) => {
+      for (let mapValue of selectedValueForAllFilters.values()) {
+        let arrayForMap = Array.from(mapValue);
+        console.log(arrayForMap);
+        for (let i = 0; i < arrayForMap.length; i++) {
+          if (value.category === arrayForMap[i]) {
+            return value;
+          } else if (value.brand === arrayForMap[i]) {
+            return value;
+          } else if (value.season === arrayForMap[i]) {
+            return value;
+          }
+        }
+      }
+    });
+    setStateForFilter(true);
+    dispatch(
+      saveProductsData(
+        props.data,
+        arrayValue,
+        props.gender,
+        props.category,
+        props.brand,
+        props.season
+      )
+    );
   };
 
   const onSeasonHandler = (productValue) => {
     selectedValueForSeason.add(productValue);
-    selectedValueForAllFilters.set('Season', selectedValueForSeason);
+    selectedValueForAllFilters.set("Season", selectedValueForSeason);
     console.log(selectedValueForAllFilters);
-    dispatch(fetchFilteredProductsData(selectedValueForAllFilters));
-
+    let arrayValue = props?.data?.filter((value) => {
+      for (let mapValue of selectedValueForAllFilters.values()) {
+        let arrayForMap = Array.from(mapValue);
+        console.log(arrayForMap);
+        for (let i = 0; i < arrayForMap.length; i++) {
+          if (value.category === arrayForMap[i]) {
+            return value;
+          } else if (value.brand === arrayForMap[i]) {
+            return value;
+          } else if (value.season === arrayForMap[i]) {
+            return value;
+          }
+        }
+      }
+    });
+    setStateForFilter(true);
+    dispatch(
+      saveProductsData(
+        props.data,
+        arrayValue,
+        props.gender,
+        props.category,
+        props.brand,
+        props.season
+      )
+    );
   };
 
   return (
@@ -104,28 +261,39 @@ function Home(props) {
                   </ul>
                   <ul className="season-list">
                     <h4 className="filter-header">Season</h4>
-                    {props?.season?.map((productValue, index) => (
-                      productValue.length > 0 && (
-                        <SeasonList
-                          id={index}
-                          productValue={productValue}
-                          onClick={onSeasonHandler}
-                        />
-                      )
-                    ))}
+                    {props?.season?.map(
+                      (productValue, index) =>
+                        productValue.length > 0 && (
+                          <SeasonList
+                            id={index}
+                            productValue={productValue}
+                            onClick={onSeasonHandler}
+                          />
+                        )
+                    )}
                   </ul>
                 </div>
               </div>
             </div>
             <div className="col-md-8 col-sm-7 col-xs-12 no-padding">
               <div className="right-container">
-                <Search />
+                <Search
+                  onClick={onImageClickHandler}
+                  onKeyUp={keyUpEvent}
+                  onChange={onChangeForSearch}
+                />
                 <div className="search-container">
                   <div className="row">
-                    {props?.data?.products &&
-                      props?.data?.products.map((product, index) => (
+                    {(stateForFilter === false &&
+                      props?.data &&
+                      props?.data?.map((product, index) => (
                         <InitialData id={index} productValue={product} />
-                      ))}
+                      ))) ||
+                      (stateForFilter === true &&
+                        props?.filterData &&
+                        props?.filterData?.map((product, index) => (
+                          <InitialData id={index} productValue={product} />
+                        )))}
                   </div>
                 </div>
               </div>
@@ -139,11 +307,12 @@ function Home(props) {
 
 const mapData = (state) => {
   return {
-    data: state.filterData,
-    gender:state.gender,
-    category:state.category,
-    brand:state.brand,
-    season:state.season,
+    data: state.data,
+    filterData: state.filterData,
+    gender: state.gender,
+    category: state.category,
+    brand: state.brand,
+    season: state.season,
   };
 };
 

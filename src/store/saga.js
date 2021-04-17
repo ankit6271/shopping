@@ -16,41 +16,12 @@ function* fetchProductsData() {
       brand.add(value.brand);
       season.add(value.season);
     });
-    yield put(saveProductsData(dataFetched, Array.from(gender), Array.from(category),Array.from(brand) , Array.from(season)));
+    console.log(dataFetched.products);
+    yield put(saveProductsData(dataFetched.products,dataFetched.products, Array.from(gender), Array.from(category),Array.from(brand) , Array.from(season)));
   } catch (error) {
     console.log(error);
   }
 }
-function* fetchFilteredProductsData({mapData}) {
-  console.log(mapData);
-  try {
-    const finalDataFetched=dataFetched?.products?.filter((value) => {
-      for(let mapValue of mapData.values()){
-        let arrayForMap=Array.from(mapValue);
-        for(let i=0;i<arrayForMap.length;i++){
-          if(value.gender===arrayForMap[i]){
-            return value
-          }
-          else if(value.category===arrayForMap[i]){
-            return value
-          }
-          else if(value.brand===arrayForMap[i]){
-            return value
-          }
-          else if(value.season===arrayForMap[i]){
-            return value
-          }
-        }
-      }
-    });
-    yield put(saveProductsData(finalDataFetched));
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 export default function* defaultProductSaga() {
   yield takeLatest(actions.FETCH_DATA, fetchProductsData);
-  yield takeLatest(actions.FETCH_FILTERED_DATA, fetchFilteredProductsData);
-
 }
